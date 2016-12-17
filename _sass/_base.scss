@@ -9,7 +9,7 @@
 body {
          background: #fff;
          font-family: $base-font-family;
-         font-size: 15px;
+         font-size: $base-font-size;
          font-weight: 300;
          overflow-x: hidden;
          color: $text-color;
