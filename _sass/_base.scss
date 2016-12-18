@@ -9,7 +9,7 @@
 body {
          background: #fff;
          font-family: $base-font-family;
-         font-size: $base-font-size !important;
+         font-size: $base-font-size;
          font-weight: 300;
          overflow-x: hidden;
          color: $text-color;
@@ -20,6 +20,10 @@ body {
          
 }
 
+
+p {
+         font-size: $base-font-size;
+    }
 
 a {
     color: $brand-color;
