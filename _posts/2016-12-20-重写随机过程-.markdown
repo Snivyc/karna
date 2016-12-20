@@ -1,0 +1,69 @@
+---
+layout: post
+title:  "重写随机过程"
+description: 利用Python中的过滤器filter()与生成器generator重写页面置换算法中的随机过程
+categories: jekyll update
+img: karna.jpg
+categories: [one, two]
+color: 1976D2
+author: 陈天浩
+---
+### 要求：
+
+利用Python中的过滤器filter()与生成器generator重写页面置换算法中的随机过程，随机过程如下：
+
+---
+（1）在[0,159]之间随机选举一条起始执行指令，其序号为 m ;
+
+（2）顺序执行两条指令，即序号为 m+1 、m+2 的指令;
+
+（3）通过随机数，跳转到前地址部分[0,m-1]中的某条指令处，其序号为 m1;
+
+（4）顺序执行两条指令，即序号为 m1+1 、m1+2的指令;
+
+（5）通过随机数，跳转到后地址部分[m1+3,159]中的某条指令处，其序号为 m2;
+
+（6）顺序执行两条指令，即序号为 m2+1、m2+2 的指令;若m2+2>159 只执行一条指令;
+
+
+（7）重复 “跳转到前地址部分、顺序执行、跳转到后地址部分、顺序执行”的过程，直至执行完全部200条指令。
+---
+
+
+
+```python
+import random
+
+#按要求构造生成器
+def generator():
+    i = random.randint(0, 159)
+    yield(i)
+    yield(i + 1)
+    yield(i + 2)
+    while True:
+        i=random.randint(0, i)
+        yield(i)
+        yield(i + 1)
+        yield(i + 2)
+        i=random.randint(i+3, 159)
+        yield(i)
+        yield(i + 1)
+        yield(i + 2)
+o=generator()
+
+#过滤生成器中超过范围的元素
+def filtration(n):
+    return n >= 0 and n <= 159
+oo=filter(filtration,o)
+
+#按要求生产长度为n的随机数列表
+list=[]
+def randomList(n):
+    for x in range(n):
+        list.append(next(oo))
+
+#生成长度为200的随机数列表
+randomList(200)
+print(list)
+```
+
